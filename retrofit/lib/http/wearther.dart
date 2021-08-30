@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:http/http.dart' as http;
 
 class Data {
@@ -46,7 +47,7 @@ class _WeatherState extends State<Weather> {
   }
 
   // This list holds the data for the list view
-  List<Data> _foundResult = [];
+  List<Data> _foundResult = ([]);
   List<Data> locatioData = [];
 
   @override
@@ -78,53 +79,91 @@ class _WeatherState extends State<Weather> {
     });
   }
 
+  bool name = false;
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: HexColor("#b099c5"),
+        title: Text(
+          "Cities",
+          style: TextStyle(),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(10),
         child: Column(
           children: [
-            TextField(
-              style: TextStyle(color: Colors.black),
-              onChanged: (value) => _runFilter(value),
-              decoration: InputDecoration(
-                  labelText: 'Search Location', suffixIcon: Icon(Icons.search)),
+            Container(
+              margin: EdgeInsets.only(left: 5, right: 5),
+              child: TextField(
+                style: TextStyle(color: Colors.black),
+                onChanged: (value) => _runFilter(value),
+                decoration: InputDecoration(
+                    labelText: 'Search Location',
+                    labelStyle: TextStyle(
+                      fontSize: 15.0,
+                      color: HexColor("#b099c5"),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide:
+                          BorderSide(color: HexColor("#b099c5"), width: 2.0),
+                    ),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide:
+                          BorderSide(color: HexColor("#b099c5"), width: 2.0),
+                    ),
+                    suffixIcon: Icon(
+                      Icons.search,
+                      color: HexColor("#b099c5"),
+                    )),
+              ),
             ),
             Expanded(
               child: _foundResult.length > 0
                   ? ListView.builder(
                       itemCount: _foundResult.length,
                       itemBuilder: (context, index) => Card(
-                        color: Colors.blue,
-                        margin: EdgeInsets.symmetric(vertical: 10),
+                        elevation: 8,
+                        color: HexColor("#8164a9"),
+                        margin: EdgeInsets.only(top: 20, left: 10, right: 10),
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(30), // if you need this
+                        ),
                         child: Row(
                           children: <Widget>[
                             Container(
-                              margin: EdgeInsets.only(left: 10),
+                              margin: EdgeInsets.only(left: 15),
                               child: Icon(
                                 Icons.location_city,
-                                size: 60,
+                                size: 55,
+                                color: HexColor("#3c2957"),
                               ),
                             ),
                             Container(
                               margin: EdgeInsets.only(left: 30),
                               child: Column(
                                 children: <Widget>[
-                                  Container(
-                                    padding:
-                                        EdgeInsets.only(top: 15, bottom: 5),
-                                    child: Text(
-                                      _foundResult[index].woeid.toString(),
-                                      style: TextStyle(
-                                          fontSize: 14, color: Colors.white),
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Container(
+                                      padding:
+                                          EdgeInsets.only(top: 15, bottom: 5),
+                                      child: Text(
+                                        _foundResult[index].woeid.toString(),
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                            fontSize: 14, color: Colors.white),
+                                      ),
                                     ),
                                   ),
                                   Container(
                                     padding: EdgeInsets.only(bottom: 5),
                                     child: Text(
                                       _foundResult[index].title,
+                                      textAlign: TextAlign.left,
                                       style: TextStyle(
                                           fontSize: 19, color: Colors.white),
                                     ),
@@ -133,24 +172,39 @@ class _WeatherState extends State<Weather> {
                                     padding: EdgeInsets.only(bottom: 5),
                                     child: Text(
                                       '${_foundResult[index].locationType.toString()}',
+                                      textAlign: TextAlign.left,
                                       style: TextStyle(
                                           fontSize: 14, color: Colors.white),
                                     ),
                                   ),
                                   Container(
-                                    padding: EdgeInsets.only(bottom: 15),
+                                    padding:
+                                        EdgeInsets.only(bottom: 15, right: 10),
                                     child: Text(
                                       "longitute: " +
                                           '${_foundResult[index].lattlong.toString()}',
+                                      textAlign: TextAlign.left,
                                       style: TextStyle(
-                                        fontSize: 14,
+                                        fontSize: 12,
                                         color: Colors.white,
                                       ),
                                     ),
                                   ),
                                 ],
                               ),
-                            )
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(right: 0),
+                              alignment: Alignment.centerLeft,
+                              child: Checkbox(
+                                value: this.name,
+                                onChanged: (bool value) {
+                                  setState(() {
+                                    this.name = value;
+                                  });
+                                },
+                              ),
+                            ),
                           ],
                         ),
                       ),

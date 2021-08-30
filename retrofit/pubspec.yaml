@@ -32,6 +32,8 @@ dependencies:
   appbar_textfield: ^1.0.1+1
   snapshot: ^0.1.0-dev.5
   url_launcher: ^5.4.0
+  hexcolor: ^2.0.5
+  parent_child_checkbox: ^0.0.1
 
 
 
