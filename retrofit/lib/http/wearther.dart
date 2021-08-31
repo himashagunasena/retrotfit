@@ -1,31 +1,16 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:Epic/data/data.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:http/http.dart' as http;
-
-class Data {
-  final String title;
-  final String locationType;
-  final int woeid;
-  final String lattlong;
-
-  Data({this.title, this.locationType, this.woeid, this.lattlong});
-
-  factory Data.fromJson(Map<String, dynamic> json) {
-    return Data(
-        title: json['title'],
-        locationType: json['location_type'],
-        woeid: json['woeid'],
-        lattlong: json['latt_long']);
-  }
-}
+import 'details.dart';
 
 class Weather extends StatefulWidget {
   @override
   _WeatherState createState() => _WeatherState();
 }
 
+//Service
 class _WeatherState extends State<Weather> {
   // This holds a list of fiction users
   // You can use data fetched from a database or cloud as well
@@ -45,6 +30,7 @@ class _WeatherState extends State<Weather> {
       throw Exception('Unexpected error occured!');
     }
   }
+//
 
   // This list holds the data for the list view
   List<Data> _foundResult = ([]);
@@ -58,19 +44,17 @@ class _WeatherState extends State<Weather> {
     _foundResult = locatioData;
   }
 
+  //serachbar function
   // This function is called whenever the text field changes
   void _runFilter(String enteredKeyword) {
     List<Data> results = [];
     if (enteredKeyword.isEmpty) {
-      // if the search field is empty or only contains white-space, we'll display all users
       results = locatioData;
     } else {
       results = locatioData
           .where((user) =>
               user.title.toLowerCase().contains(enteredKeyword.toLowerCase()))
           .toList();
-
-      // we use the toLowerCase() method to make it case-insensitive
     }
 
     // Refresh the UI
@@ -78,12 +62,13 @@ class _WeatherState extends State<Weather> {
       _foundResult = results;
     });
   }
+  //
 
-  bool name = false;
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: HexColor("#F6F5F5"),
       appBar: AppBar(
         backgroundColor: HexColor("#b099c5"),
         title: Text(
@@ -125,8 +110,8 @@ class _WeatherState extends State<Weather> {
                   ? ListView.builder(
                       itemCount: _foundResult.length,
                       itemBuilder: (context, index) => Card(
-                        elevation: 8,
-                        color: HexColor("#8164a9"),
+                        elevation: 7,
+                        color: Colors.white,
                         margin: EdgeInsets.only(top: 20, left: 10, right: 10),
                         shape: RoundedRectangleBorder(
                           borderRadius:
@@ -139,72 +124,29 @@ class _WeatherState extends State<Weather> {
                               child: Icon(
                                 Icons.location_city,
                                 size: 55,
-                                color: HexColor("#3c2957"),
+                                color: HexColor("#8164a9"),
                               ),
                             ),
-                            Container(
-                              margin: EdgeInsets.only(left: 30),
-                              child: Column(
-                                children: <Widget>[
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Container(
-                                      padding:
-                                          EdgeInsets.only(top: 15, bottom: 5),
-                                      child: Text(
-                                        _foundResult[index].woeid.toString(),
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                            fontSize: 14, color: Colors.white),
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.only(bottom: 5),
-                                    child: Text(
-                                      _foundResult[index].title,
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                          fontSize: 19, color: Colors.white),
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.only(bottom: 5),
-                                    child: Text(
-                                      '${_foundResult[index].locationType.toString()}',
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                          fontSize: 14, color: Colors.white),
-                                    ),
-                                  ),
-                                  Container(
-                                    padding:
-                                        EdgeInsets.only(bottom: 15, right: 10),
-                                    child: Text(
-                                      "longitute: " +
-                                          '${_foundResult[index].lattlong.toString()}',
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                            CityDetails(
+                              _foundResult,
+                              index,
                             ),
+                            //Checkbox
                             Container(
                               padding: EdgeInsets.only(right: 0),
                               alignment: Alignment.centerLeft,
                               child: Checkbox(
-                                value: this.name,
-                                onChanged: (bool value) {
+                                checkColor: Colors.white, // color of tick Mark
+                                activeColor: HexColor("#b099c5"),
+                                value: _foundResult[index].value,
+                                onChanged: (bool nvalue) {
                                   setState(() {
-                                    this.name = value;
+                                    _foundResult[index].value = nvalue;
                                   });
                                 },
                               ),
                             ),
+                            //
                           ],
                         ),
                       ),
