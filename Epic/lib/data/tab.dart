@@ -1,6 +1,7 @@
 import 'package:Epic/http/profile.dart';
 import 'package:Epic/http/wearther.dart';
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 class TabBarList extends StatelessWidget {
   @override
@@ -15,11 +16,12 @@ class TabBarList extends StatelessWidget {
   Widget buildTabBar() {
     return TabBar(
       labelStyle: TextStyle(fontSize: 16.5),
+      indicatorColor: HexColor("#8164a9"),
       tabs: <Widget>[
         Tab(
           text: "Cities",
         ),
-        Tab(text: "Profile"),
+        Tab(text: "Image"),
         Tab(text: "Scan"),
       ],
     );
@@ -28,6 +30,7 @@ class TabBarList extends StatelessWidget {
   Widget buildTabBody() {
     return TabBarView(children: <Widget>[
       Weather(),
+      Profile(),
       Profile(),
     ]);
   }
