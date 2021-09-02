@@ -34,7 +34,7 @@ dependencies:
   url_launcher: ^5.4.0
   hexcolor: ^2.0.5
   parent_child_checkbox: ^0.0.1
-
+  cached_network_image: ^2.0.0
 
 
 
