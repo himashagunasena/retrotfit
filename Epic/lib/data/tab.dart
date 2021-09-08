@@ -1,5 +1,6 @@
 import 'package:Epic/http/profile.dart';
 import 'package:Epic/http/wearther.dart';
+import 'package:Epic/page/qrcodescan.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
@@ -31,7 +32,7 @@ class TabBarList extends StatelessWidget {
     return TabBarView(children: <Widget>[
       Weather(),
       Profile(),
-      Profile(),
+      ScanQRCode(),
     ]);
   }
 }

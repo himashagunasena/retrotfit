@@ -1,12 +1,6 @@
-import 'dart:convert';
-import 'package:Epic/data/drawer.dart';
-import 'package:Epic/http/wearther.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:Epic/data/data.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:http/http.dart' as http;
-import 'details.dart';
 import 'package:Epic/data/tab.dart';
 
 class Home extends StatelessWidget {
