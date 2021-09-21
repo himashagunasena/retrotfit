@@ -1,3 +1,4 @@
+import 'package:Epic/http/moor_page.dart';
 import 'package:Epic/http/profile.dart';
 import 'package:Epic/http/wearther.dart';
 import 'package:Epic/page/qrcodescan.dart';
@@ -7,7 +8,7 @@ import 'package:hexcolor/hexcolor.dart';
 class TabBarList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new DefaultTabController(length: 3, child: buildScaffold());
+    return new DefaultTabController(length: 4, child: buildScaffold());
   }
 
   Widget buildScaffold() {
@@ -24,6 +25,7 @@ class TabBarList extends StatelessWidget {
         ),
         Tab(text: "Image"),
         Tab(text: "Scan"),
+        Tab(text: "Data Add"),
       ],
     );
   }
@@ -33,6 +35,7 @@ class TabBarList extends StatelessWidget {
       Weather(),
       Profile(),
       ScanQRCode(),
+      MoorPage(),
     ]);
   }
 }

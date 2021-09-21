@@ -17,8 +17,8 @@ class _WeatherState extends State<Weather> {
   // This holds a list of fiction users
   // You can use data fetched from a database or cloud as well
   Future<Null> fetchData() async {
-    final response = await http
-        .get('https://www.metaweather.com/api/location/search/?query=ba');
+    final response = await http.get(
+        Uri.parse('https://www.metaweather.com/api/location/search/?query=ba'));
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
       setState(
